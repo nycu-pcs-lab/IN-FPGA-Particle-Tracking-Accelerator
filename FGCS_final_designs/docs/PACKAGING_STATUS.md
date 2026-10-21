@@ -11,7 +11,10 @@
 | Portable launcher | Corrected and exercised with Vitis HLS 2023.2 |
 | Synthesis / new RTL co-sim / P&R | NOT RUN |
 | Project/weight/data rights | Still awaiting rightsholder confirmation |
-| GitHub URL / actual commit / DOI | Not created or claimed |
+| Repository | [Public GitHub repository](https://github.com/nycu-pcs-lab/IN-FPGA-Particle-Tracking-Accelerator) |
+| Package version / release page | [v1.0.1](https://github.com/nycu-pcs-lab/IN-FPGA-Particle-Tracking-Accelerator/releases/tag/v1.0.1) |
+| Zenodo DOI | None recorded in this package |
+| Release-tag source/data equivalence | Not asserted; requires a comparison of tagged files |
 
 Only release testbench/launcher/documentation/verification files changed. No kernel
 C++, precision, architecture, pipeline, FIFO, E_PAR, sharding or mathematical behavior

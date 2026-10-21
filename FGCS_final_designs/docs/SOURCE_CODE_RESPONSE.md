@@ -3,7 +3,8 @@
 This document answers SOURCE_CODE_REQUEST.md using only paths inside this package.
 Core files are byte-identical to the final D20/D24 hardware-cost sources and match
 the corresponding final run source hashes. See ../provenance/final_design_provenance.json.
-No verified Git commit/tag/DOI exists. Local source mtimes and SHA-256 are recorded.
+Local HLS snapshot mtimes and SHA-256 are recorded separately from GitHub release
+identifiers; they do not establish equivalence between release tags.
 The 8.8 ns result is identified by source/export/run records, not by C++ text alone.
 Original HLS target is 5 ns; final operating clocks are 8 ns (M), 8.8 ns (L).
 
@@ -48,12 +49,16 @@ PIPELINE, DATAFLOW and storage pragmas alone are standard HLS mechanisms, not th
 claimed contribution. A shortened listing must disclose omitted ranges; the full
 function below is verbatim, including original comments and indentation.
 
-## Code availability unknowns
+## Code availability and unresolved permissions
 
-GitHub URL, approved project license, weight/sample redistribution permission,
-Zenodo DOI, public release date and fixed Git tag are UNKNOWN or pending. No release
-is published here. Local paths are package-relative; no private workstation paths
-or host loader files are required. No paper/Item12/Item32 status is changed.
+The package is available in the public
+[repository](https://github.com/nycu-pcs-lab/IN-FPGA-Particle-Tracking-Accelerator).
+Its version identifier is v1.0.1; see the
+[release page](https://github.com/nycu-pcs-lab/IN-FPGA-Particle-Tracking-Accelerator/releases/tag/v1.0.1).
+The project license and weight/sample redistribution permissions remain pending.
+No Zenodo DOI is recorded. Local paths are package-relative; no private workstation
+paths or host loader files are required. This document does not change the paper
+or Item12/Item32 status.
 
 ## Exact source excerpts and line numbers
 

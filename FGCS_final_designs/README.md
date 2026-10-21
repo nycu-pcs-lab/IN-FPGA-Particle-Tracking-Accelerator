@@ -1,10 +1,15 @@
 # FGCS final Graph_M D20 / Graph_L D24 HLS designs
 
-**GitHub upload package — final source and packaged C-simulation verified.**
+**Version v1.0.1 — final HLS source with verified sample C-simulation.**
+
+Repository: [IN-FPGA-Particle-Tracking-Accelerator](https://github.com/nycu-pcs-lab/IN-FPGA-Particle-Tracking-Accelerator).
+Release page: [v1.0.1](https://github.com/nycu-pcs-lab/IN-FPGA-Particle-Tracking-Accelerator/releases/tag/v1.0.1).
 
 **Project license and weight/sample redistribution rights still need confirmation.**
 Source, weight and dataset redistribution status is described in LICENSE and NOTICE.md.
-No public repository, DOI, commit or tag is claimed. VERSION and checksums identify this package; this is not a Git commit or tag.
+Public availability does not resolve the pending licensing and redistribution
+permissions. VERSION identifies the package version, and the checksum manifest
+identifies its files. No Zenodo DOI is recorded in this package.
 
 Only the final two FPGA source configurations are included. This package does not
 claim to reproduce every paper figure/table: the Fig. 7–10 design-space variants,
@@ -13,9 +18,9 @@ records are outside this package.
 
 ## Quick start
 
-Extract this ZIP and use its contents as the root of your GitHub repository.
-Use this version instead of the earlier release-candidate ZIP: the HLS launcher
-and testbench argument forwarding have been corrected and verified.
+Clone or download the repository and work in `FGCS_final_designs/`. If using a
+package ZIP, work in its extracted package root. The HLS launcher and testbench
+argument forwarding have been exercised with Vitis HLS 2023.2.
 
 1. Activate **Vitis HLS 2023.2** using your own installation settings.
 2. From the extracted repository root, run:
@@ -33,10 +38,9 @@ and 1,649,533 logical edge slots. **No synthesis or P&R was run in verification.
 The testbenches execute the original fixed-point top functions and compare valid
 raw scores against archived final RTL outputs; this is not an FP32 accuracy rerun.
 
-Upload the extracted repository contents, excluding `.build/` and local logs.
-If using Git, initialize a local repository, add the files, create a commit, and
-push to your own GitHub remote. This package does not assign an author identity,
-public URL, actual public commit, Git tag, or DOI.
+Generated projects and local logs remain under `.build/` and are excluded from
+the source package. Consult the repository's tags and release pages for versioned
+snapshots; the archived HLS source hashes are recorded separately in provenance.
 
 **Licensing remains unresolved:** `LICENSE` is a pending-status notice, not an
 MIT or Apache license. Redistribution rights for the weights and TrackML-derived
@@ -52,8 +56,9 @@ on behalf of the authors or institution.
 
 Both use MERGE_PAR=4, stored node/edge formats and weights/biases ap_fixed<16,8>,
 and the original final output/sigmoid interface. L retains 50,000-slot shards,
-33 shards, and a 49,533-slot final shard. Architecture, pipeline and arithmetic
-source are unchanged, byte-for-byte. Device: xcvu9p-flga2104-2-e.
+33 shards, and a 49,533-slot final shard. Device: xcvu9p-flga2104-2-e.
+The canonical HLS source hashes are recorded in provenance; this is not a claim
+of source or data equivalence between release tags.
 
 HLS generation used **5 ns**, Vitis HLS 2023.2, vitis flow target, C++14. The supplied
 HLS script preserves that target. The final routed operating clocks are 8 / 8.8 ns,
@@ -127,7 +132,7 @@ Build reports are in .build/Graph_M/solution1/syn/report/ (and Graph_L respectiv
 co-sim reports in solution1/sim/report/, and actual_raw.bin / exported_ip.zip in
 .build/outputs/Graph_M or Graph_L. No implementation/place/route is invoked.
 
-The TB reads packaged input and common weights, calls the actual unchanged top,
+The TB reads packaged input and common weights, calls the packaged fixed-point top,
 writes every configured score, then compares valid raw output bits. Expected
 success prints VALID_DIFF=0; padding differences are reported separately and do
 not fail. Expected scores were copied from existing final-precision RTL results,
@@ -158,14 +163,16 @@ the paper's complete latency batch or a performance rerun.
   external-memory node cache or DDR node spilling in these final sources.
 - Carry correctness requires destination-sorted input and reserved dummy tail.
   See docs/INPUT_FORMAT.md and docs/SOURCE_CODE_RESPONSE.md.
-- Sample inputs and weights are included for local review, but redistribution rights
-  are unresolved. This package must not be described as already public or open-source licensed.
-  If either must be withheld, revise runnable-sample claims before public release.
+- Sample inputs and weights are included, but their redistribution rights remain
+  unresolved. Public access is separate from an approved open-source or data
+  license. If any assets must be withheld, remove them and revise the associated
+  runnable-sample claims.
 
 ## Code snippets and availability statement
 
 See docs/SOURCE_CODE_RESPONSE.md for exact public-tree line numbers, complete
 Graph_L aggregator and call sites, actual modulo read mapping and known unknowns.
-No manuscript, tracking table or response letter was modified. A code-availability
-statement needs an actual approved license, repository/version URL and confirmed
-sample/weight distribution scope before it can claim availability.
+The public repository and version reference may be cited as available artifacts.
+The accompanying statement must separately disclose the pending project license
+and weight/sample redistribution permissions; it must not imply an approved
+open-source license merely because the files are publicly accessible.

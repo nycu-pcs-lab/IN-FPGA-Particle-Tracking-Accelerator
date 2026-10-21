@@ -54,7 +54,8 @@
   },
   "canonical_core_modified": false,
   "FP32_accuracy_remeasurement": false,
-  "public_repository": null,
+  "public_repository": "https://github.com/nycu-pcs-lab/IN-FPGA-Particle-Tracking-Accelerator",
   "license_status": "PENDING_RIGHTSHOLDER_CONFIRMATION",
-  "sample_weight_distribution_rights": "PENDING_CONFIRMATION"
+  "sample_weight_distribution_rights": "PENDING_CONFIRMATION",
+  "publication_metadata_note": "Repository URL updated; historical C-simulation results and dates are retained."
 }

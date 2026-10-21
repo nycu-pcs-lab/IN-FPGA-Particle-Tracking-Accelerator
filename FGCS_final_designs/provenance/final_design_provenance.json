@@ -1,9 +1,9 @@
 {
-  "release_id": "fgcs-final-designs-2026-10-22-english-single-samples",
+  "release_id": "v1.0.1",
   "created_timezone": "Asia/Taipei",
   "git_commit": null,
   "git_tag": null,
-  "public_repository": null,
+  "public_repository": "https://github.com/nycu-pcs-lab/IN-FPGA-Particle-Tracking-Accelerator",
   "license_status": "RIGHTSHOLDER_CONFIRMATION_PENDING",
   "dataset_redistribution_status": "CONFIRMATION_PENDING",
   "validation_this_package": "Vitis HLS 2023.2 C-simulation PASS for both packaged samples; static checks; no synthesis/RTL cosim/P&R",

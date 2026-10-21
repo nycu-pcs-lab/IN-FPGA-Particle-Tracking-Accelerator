@@ -1,0 +1,8 @@
+Design: Graph_L
+Tool: Vitis HLS 2023.2 / SW build 4023990
+Command: bash scripts/run_hls.sh Graph_L csim
+CSim done with 0 errors.
+OUTPUT_SLOTS=1649533
+VALID_EDGES=813711 VALID_DIFF=0 PADDING_DIFF=0
+ACTUAL_RAW_SHA256=636aebbe83d0357638d476983d546b6ec68e16ad3b7508f845b9f594c9d8e92e
+This is a sanitized receipt; it is not the full native tool log.

@@ -1,0 +1,24 @@
+{
+  "design": "Graph_L",
+  "graphs": [
+    {
+      "source_graph_index": 0,
+      "nodes": 43278,
+      "edge_slots": 1649533,
+      "valid_edges": 813711,
+      "padding_edges": 835822,
+      "source_nodes": 17538,
+      "original_input_sha256": "cda1509eded17b59b0e95a2bcf62db87e43c36722cbf53fa22af59ea22cbbccd"
+    }
+  ],
+  "batch_graphs": 1,
+  "ordering": "destination nondecreasing; valid edges precede dummy self-loop padding",
+  "dummy_node_id": 43277,
+  "expected_output_origin": "Existing final-precision RTL co-simulation output, not regenerated for this package",
+  "expected_origin_transaction": "first graph of first 10-graph call in continuous 10+10 run",
+  "expected_origin_file_sha256": "636aebbe83d0357638d476983d546b6ec68e16ad3b7508f845b9f594c9d8e92e",
+  "expected_comparison": "bit-exact on valid_mask==1 only; padding differences are reported but excluded",
+  "new_portable_testbench_executed": true,
+  "dataset_rights": "TrackML-derived sample redistribution permission not established by this packaging task",
+  "new_portable_testbench_status": "PASS_VITIS_HLS_2023_2_CSIM"
+}

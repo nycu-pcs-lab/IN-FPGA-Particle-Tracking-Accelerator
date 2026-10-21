@@ -1,0 +1,12 @@
+Design: Graph_M
+Tool: Vitis HLS 2023.2 / SW build 4023990
+Command: bash scripts/run_hls.sh Graph_M csim
+CSim done with 0 errors.
+STORED_GRAPHS=1 SOURCE_GRAPH=0 INTERNAL_BATCH_ENTRIES=3
+SLOTS_PER_STORED_GRAPH=104328 VALID_EDGES_PER_STORED_GRAPH=96791
+INTERNAL_OUTPUT_COUNT=312984
+PER_REPLAY_VALID_DIFF=0,0,0
+PER_REPLAY_PADDING_DIFF=7537,7537,7537
+ACTUAL_RAW_SHA256=48060f48ea00f4c56b75d487f0e188bfb1d80b1e81d08007013e24873cce6263
+One graph of scores is retained on disk; all three replays were compared.
+This is a sanitized receipt, not the full native tool log.

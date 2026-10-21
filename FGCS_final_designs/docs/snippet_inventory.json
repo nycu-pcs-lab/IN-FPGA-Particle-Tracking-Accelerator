@@ -1,0 +1,114 @@
+[
+  {
+    "snippet": "L carry full",
+    "file": "designs/Graph_L/src/su_top_model.cpp",
+    "start_line": 1100,
+    "end_line": 1512,
+    "sha256": "1faa558fbcd26448b60d9d3f04405c02be9ebbf1a1585bdf8415bea00725fd04"
+  },
+  {
+    "snippet": "L first shard",
+    "file": "designs/Graph_L/src/su_top_model.cpp",
+    "start_line": 6951,
+    "end_line": 6983,
+    "sha256": "bd13a4b4c526b7c150f968e3dc7e3461b7766392b938c5f5528db725c59f9cee"
+  },
+  {
+    "snippet": "L later pong",
+    "file": "designs/Graph_L/src/su_top_model.cpp",
+    "start_line": 7021,
+    "end_line": 7053,
+    "sha256": "9fa9a9ba67a543eaf15fdeb40f1dd028c3af1730e8bc2efeee598f33b94414cb"
+  },
+  {
+    "snippet": "L later ping",
+    "file": "designs/Graph_L/src/su_top_model.cpp",
+    "start_line": 7082,
+    "end_line": 7114,
+    "sha256": "6ba8d96370198fa2e8509b52a4e158106a60285d0a5c4c0876ee5366fa148d99"
+  },
+  {
+    "snippet": "L final pong",
+    "file": "designs/Graph_L/src/su_top_model.cpp",
+    "start_line": 7153,
+    "end_line": 7185,
+    "sha256": "f755f739755670a591c4d60c803e2ce3d73d269e6ec1c32487fb590dc8532421"
+  },
+  {
+    "snippet": "L final ping",
+    "file": "designs/Graph_L/src/su_top_model.cpp",
+    "start_line": 7210,
+    "end_line": 7242,
+    "sha256": "8f380bdeb2504289372bafb2a25f36bba4eb725e93ea409c2a2313fd0864a803"
+  },
+  {
+    "snippet": "L direct aggregator call",
+    "file": "designs/Graph_L/src/su_top_model.cpp",
+    "start_line": 6275,
+    "end_line": 6286,
+    "sha256": "476c74303fa2621d6fdb65c2d836de5727dedae17204730d2bbe65f6433877bc"
+  },
+  {
+    "snippet": "L replicas",
+    "file": "designs/Graph_L/src/su_top_model.cpp",
+    "start_line": 6810,
+    "end_line": 6818,
+    "sha256": "9eb7a51a7021fac8e164f1204922faaa6cae0d1ad4478b81a0ab8bb97d229fcc"
+  },
+  {
+    "snippet": "L storage pragmas",
+    "file": "designs/Graph_L/src/su_top_model.cpp",
+    "start_line": 6845,
+    "end_line": 6857,
+    "sha256": "949893429c17b8d360c330a864de31eb1d580326e681ecfcdaa934484b2dc9ec"
+  },
+  {
+    "snippet": "L modulo read",
+    "file": "designs/Graph_L/src/su_top_model.cpp",
+    "start_line": 4658,
+    "end_line": 4677,
+    "sha256": "4754c7d210bdf9251a68c5c1786a7beb3bd2522d3f79a82ee85971a785a57068"
+  },
+  {
+    "snippet": "M replicas",
+    "file": "designs/Graph_M/src/su_top_model.cpp",
+    "start_line": 3895,
+    "end_line": 3905,
+    "sha256": "22a4ba027e5bb7789d58d447108e08dde6ea691a149a8f7a151dc13fe24094e5"
+  },
+  {
+    "snippet": "M storage pragmas",
+    "file": "designs/Graph_M/src/su_top_model.cpp",
+    "start_line": 3946,
+    "end_line": 3951,
+    "sha256": "c9ba2d5605f3200771fd07594183af3267278a6a6ae1b3cdd486d81131ff9f42"
+  },
+  {
+    "snippet": "M partition pragmas",
+    "file": "designs/Graph_M/src/su_top_model.cpp",
+    "start_line": 3964,
+    "end_line": 3971,
+    "sha256": "041f0cf7bad0894db1d3eb4895a42fa89c7899acab7698e4572d36639192dcb4"
+  },
+  {
+    "snippet": "M modulo read",
+    "file": "designs/Graph_M/src/su_top_model.cpp",
+    "start_line": 2792,
+    "end_line": 2804,
+    "sha256": "4a4410538c441b9e2cfdf5c6df47d9ae5143f9a262fcaba064450201d768c739"
+  },
+  {
+    "snippet": "L data types",
+    "file": "designs/Graph_L/src/su_defines.h",
+    "start_line": 23,
+    "end_line": 50,
+    "sha256": "846259d05cdb3a9ed89636d988fed3c8b795ab5183b35f72569f86e92d919f33"
+  },
+  {
+    "snippet": "L capacity",
+    "file": "designs/Graph_L/src/su_defines.h",
+    "start_line": 61,
+    "end_line": 90,
+    "sha256": "f32e5fdd1b974ad56e7d243851a6a2a1264cbbecd04837c396dcbd042a962414"
+  }
+]

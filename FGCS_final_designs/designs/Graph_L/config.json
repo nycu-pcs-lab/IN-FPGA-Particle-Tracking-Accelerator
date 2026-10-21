@@ -1,0 +1,40 @@
+{
+  "design": "Graph_L",
+  "precision_variant": "D24",
+  "aggregation_format": [
+    24,
+    16
+  ],
+  "MAC_hidden_format": [
+    24,
+    16
+  ],
+  "stored_feature_weight_bias_format": [
+    16,
+    8
+  ],
+  "final_score_format": [
+    16,
+    8
+  ],
+  "E_PAR": 8,
+  "E2_PAR": 8,
+  "N_PAR": 8,
+  "NS_PAR": 4,
+  "MERGE_PAR": 4,
+  "READ_N_PAR_PER_CH": 10,
+  "MAX_NODE": 43278,
+  "MAX_EDGE": 50000,
+  "TOTAL_EDGE_PER_GRAPH": 1649533,
+  "SRC_NODE": 17980,
+  "MAX_NUM_GRAPH": 10,
+  "edge_shards": 33,
+  "last_shard_edges": 49533,
+  "HLS_generation_clock_ns": 5.0,
+  "final_postroute_clock_ns": 8.8,
+  "final_frequency_MHz": 113.63636363636363,
+  "top": "su_top_model",
+  "part": "xcvu9p-flga2104-2-e",
+  "Vitis_HLS_version": "2023.2",
+  "Vivado_version": "2023.2"
+}

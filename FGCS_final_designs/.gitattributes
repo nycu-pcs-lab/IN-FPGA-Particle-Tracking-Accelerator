@@ -1,0 +1,7 @@
+*.bin binary
+*.cpp text eol=lf
+*.h text eol=lf
+*.tcl text eol=lf
+*.sh text eol=lf
+*.py text eol=lf
+*.md text eol=lf

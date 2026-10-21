@@ -1,0 +1,60 @@
+{
+  "validation_date_Asia_Taipei": "2026-10-21",
+  "scope": "Graph_M single stored sample, repeated three times by TB, C-sim rerun PASS; Graph_L unchanged sample and previously verified TB retained; no synthesis",
+  "results": {
+    "Graph_M": {
+      "status": "PASS",
+      "mode": "Vitis HLS 2023.2 csim_design -clean -O",
+      "tool_SW_build": 4023990,
+      "batch_graphs": 3,
+      "output_slots": 104328,
+      "valid_edges": 96791,
+      "valid_bit_mismatches": 0,
+      "padding_bit_mismatches": 22611,
+      "actual_raw_sha256": "48060f48ea00f4c56b75d487f0e188bfb1d80b1e81d08007013e24873cce6263",
+      "expected_raw_sha256": "2bb6a8a8eae89d996bb0711c5b2328e34c8ccbe96918b19f95437751b2a3a445",
+      "console_log_sha256": "ea17a144a24bcf70b1f045436d864b2aa956d76d1133d65773acf6fc4cf76ec5",
+      "native_csim_report_sha256": "d4ba277a82119d8ab4bf2311962e6b325c5e070ef6dacac0db438127e8ee023c",
+      "synthesis_executed": false,
+      "RTL_cosim_executed": false,
+      "PnR_executed": false,
+      "stored_graphs": 1,
+      "unique_graphs": 1,
+      "testbench_replays": 3,
+      "internal_output_slots": 312984,
+      "valid_edge_checks_over_replays": 290373,
+      "per_replay_valid_bit_mismatches": [
+        0,
+        0,
+        0
+      ],
+      "per_replay_padding_bit_mismatches": [
+        7537,
+        7537,
+        7537
+      ]
+    },
+    "Graph_L": {
+      "status": "PASS",
+      "mode": "Vitis HLS 2023.2 csim_design -clean -O",
+      "tool_SW_build": 4023990,
+      "batch_graphs": 1,
+      "output_slots": 1649533,
+      "valid_edges": 813711,
+      "valid_bit_mismatches": 0,
+      "padding_bit_mismatches": 0,
+      "actual_raw_sha256": "636aebbe83d0357638d476983d546b6ec68e16ad3b7508f845b9f594c9d8e92e",
+      "expected_raw_sha256": "636aebbe83d0357638d476983d546b6ec68e16ad3b7508f845b9f594c9d8e92e",
+      "console_log_sha256": "ba77ab7bae67531ebafd38efc5f4149bfe32c387849d57da73fe4456ce44d144",
+      "native_csim_report_sha256": "5b1bd9bd4267bb307a07a13c59ec0e773e0b91e85f64de25dba92d9e98962a5f",
+      "synthesis_executed": false,
+      "RTL_cosim_executed": false,
+      "PnR_executed": false
+    }
+  },
+  "canonical_core_modified": false,
+  "FP32_accuracy_remeasurement": false,
+  "public_repository": null,
+  "license_status": "PENDING_RIGHTSHOLDER_CONFIRMATION",
+  "sample_weight_distribution_rights": "PENDING_CONFIRMATION"
+}

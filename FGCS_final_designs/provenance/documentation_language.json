@@ -1,0 +1,11 @@
+{
+  "language": "English",
+  "revision_date_Asia_Taipei": "2026-10-22",
+  "translated_files": [
+    "README.md",
+    "docs/PUBLIC_RELEASE_FILE_LIST.md",
+    "docs/SOURCE_CODE_REQUEST.md"
+  ],
+  "code_weight_sample_and_validation_bytes_unchanged": true,
+  "new_model_simulation_synthesis_or_PnR": false
+}

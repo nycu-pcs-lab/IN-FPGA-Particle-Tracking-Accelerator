@@ -11,13 +11,14 @@ claim to reproduce every paper figure/table: the Fig. 7–10 design-space varian
 old configurations, CPU/GPU benchmarks, Fmax sweeps, all 40 graphs and plotting
 records are outside this package.
 
-## 中文快速開始
+## Quick start
 
-本 ZIP 可直接解壓為 GitHub repository 內容；README 下方附完整英文說明。
-舊 release_candidate ZIP 的啟動參數傳法已修正，請使用本版本。
+Extract this ZIP and use its contents as the root of your GitHub repository.
+Use this version instead of the earlier release-candidate ZIP: the HLS launcher
+and testbench argument forwarding have been corrected and verified.
 
-1. 先啟用你自己的 **Vitis HLS 2023.2** 環境（安裝目錄由使用者決定）。
-2. 在解壓後的 repository 根目錄執行：
+1. Activate **Vitis HLS 2023.2** using your own installation settings.
+2. From the extracted repository root, run:
 
 ```bash
 python3 scripts/check_package.py
@@ -25,16 +26,22 @@ bash scripts/run_hls.sh Graph_M csim
 bash scripts/run_hls.sh Graph_L csim
 ```
 
-兩個 C simulation 已實際通過；預期會印出 `VALID_DIFF=0`。Graph_M 只保存 graph0 一張圖，testbench 在記憶體中重播三次以符合原 batch 流程，
-Graph_L 範例一張，完整執行 33 shards／1,649,533 slots。**沒有跑 synthesis 或 P&R**。
-採用原始固定點 top function，並與既有 final RTL 的有效邊 raw outputs 比較，非 FP32 accuracy 重測。
+Both C simulations have passed; expect `VALID_DIFF=0`. Graph_M stores only one
+graph0 sample; its testbench replays it three times in memory to satisfy the
+unchanged batch pipeline. Graph_L stores one sample and processes all 33 shards
+and 1,649,533 logical edge slots. **No synthesis or P&R was run in verification.**
+The testbenches execute the original fixed-point top functions and compare valid
+raw scores against archived final RTL outputs; this is not an FP32 accuracy rerun.
 
-GitHub 上傳時將此目錄內的檔案放在 repository 根目錄；`.build/` 與本機 logs 不必上傳。
-如使用 Git，可先在本機 `git init`、`git add .`、`git commit`，再依自己的 GitHub remote 推送。
-本包沒有代填公開 URL／作者 Git identity，也沒有建立真正的公開 commit、tag 或 DOI。
+Upload the extracted repository contents, excluding `.build/` and local logs.
+If using Git, initialize a local repository, add the files, create a commit, and
+push to your own GitHub remote. This package does not assign an author identity,
+public URL, actual public commit, Git tag, or DOI.
 
-**授權待確認：**`LICENSE` 目前是待確認聲明，不是 MIT／Apache 開源授權；權重與
-TrackML 衍生範例的公開再散布權利也尚未確認。本包提供程式與驗證結果，沒有代替作者作授權決定。
+**Licensing remains unresolved:** `LICENSE` is a pending-status notice, not an
+MIT or Apache license. Redistribution rights for the weights and TrackML-derived
+samples also require confirmation. Packaging and verification do not grant rights
+on behalf of the authors or institution.
 
 ## Designs and clocks
 

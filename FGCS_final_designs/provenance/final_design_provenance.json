@@ -1,5 +1,5 @@
 {
-  "release_id": "fgcs-final-designs-2026-10-21-single-samples",
+  "release_id": "fgcs-final-designs-2026-10-22-english-single-samples",
   "created_timezone": "Asia/Taipei",
   "git_commit": null,
   "git_tag": null,
@@ -311,5 +311,7 @@
         0
       ]
     }
-  }
+  },
+  "documentation_language": "English",
+  "documentation_revision_date_Asia_Taipei": "2026-10-22"
 }

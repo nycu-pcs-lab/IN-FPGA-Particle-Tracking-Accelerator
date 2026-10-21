@@ -1,69 +1,94 @@
-# 公開最終 Graph_M／Graph_L 設計：需要整理的檔案清單
+# Required Files for Releasing the Final Graph_M and Graph_L Designs
 
-範圍：只公開**最終** Graph_M（D20 `<20,12>`、E_PAR=8、125 MHz）與 Graph_L
-（D24 `<24,16>`、E_PAR=8、8.8 ns / 113.636 MHz，33 個 edge shard）的可建置程式碼。
-目的：回答第 12 條（缺少 code／artifact availability statement），並支援第 32 條的
-程式碼片段。
+Scope: buildable source code for the **final** Graph_M design (D20 `<20,12>`,
+E_PAR=8, 125 MHz) and Graph_L design (D24 `<24,16>`, E_PAR=8,
+8.8 ns / 113.636 MHz, 33 edge shards).
+Purpose: address Item 12 (code/artifact availability) and support the source
+listings requested for Item 32.
 
-**不承諾的範圍：** 不宣稱「本 repo 可重現論文所有結果」。Fig. 7–10 與部分資源表來自原始
-設計空間的多個配置（`5-evaluation.tex:65`，只有圖上的彙整值），不是靠最終兩份程式碼
-就能重跑。CPU／GPU benchmark、Fmax sweep、全部 20 張圖、繪圖資料可日後另做
-「實驗重現套件」，不是這次公開的前提。
+**Scope not promised:** this repository does not claim to reproduce every paper
+result. Figures 7-10 and parts of the resource tables cover several historical
+design-space configurations (`5-evaluation.tex:65` preserves aggregate figure
+values), which cannot all be rerun using only the final two sources. CPU/GPU
+benchmarks, Fmax sweeps, the complete graph collections, and plotting data may be
+provided later in a separate experimental reproduction package; they are not
+prerequisites for this final-design source package.
 
-## 1. 必放（最終設計公開版）
+## 1. Required Contents
 
-| # | 項目 | 內容 | 請確認 |
+| # | Item | Contents | Confirmation needed |
 | --- | --- | --- | --- |
-| 1 | Graph_M 完整可建置原碼 | `su_top_model.cpp` 及**實際依賴的所有 headers 與 .cpp**（`su_defines.h`、`su_util.cpp` 以及它們 include 的檔案）。不是只放 top 檔 | 用乾淨目錄做一次 HLS C-synthesis／C-sim，確認沒有漏檔 |
-| 2 | Graph_L 完整可建置原碼 | 同上，`graph_l_d24/src/` 全部依賴 | 同上 |
-| 3 | 設定 | 容量常數與 E_PAR、E2_PAR、NS_PAR、shard 大小（Graph_L：50,000 edges/shard、33 shards）、定點格式、時脈目標（125 MHz／8.8 ns） | 與論文 Table 2、Table 9 一致 |
-| 4 | 權重 | 528 個參數（兩個設計共用或各自量化後的檔案），含格式說明 | 權重是否可公開；不能公開就在聲明寫明 |
-| 5 | 至少一組合法輸入與預期輸出 | Graph_M 與 Graph_L 各一張圖（已排序、含 padding）與對應的預期輸出 | 輸入圖是否可公開（TrackML 衍生資料授權） |
-| 6 | Testbench 與建置說明 | 可執行的 C-sim／co-sim testbench；Vitis HLS 專案 Tcl（`csynth`、`cosim` 的指令與參數） | 在乾淨環境照 README 實際跑過 |
-| 7 | 版本與工具資訊 | 固定 commit／tag、Vitis HLS／Vivado 版本、目標元件（XCVU9P）、clock period 設定 | 能連到 8.8 ns 成功佈線的版本識別（build manifest、HLS export 或報告中的雜湊／日期） |
-| 8 | README | 目錄結構、如何建置、如何跑 testbench、預期輸出、已知限制 | 見第 3 節 |
-| 9 | LICENSE | 授權條款（MIT／Apache-2.0 等） | 先確認作者與所屬單位有權選擇授權；公開在 GitHub 不等於已給他人重用授權 |
+| 1 | Complete Graph_M source | `su_top_model.cpp` and all actual local header/C++ dependencies, including `su_defines.h`, `su_util.cpp`, and their includes; not only the top file | Run HLS C-synthesis or C simulation in a clean directory to check dependency completeness |
+| 2 | Complete Graph_L source | The equivalent dependency closure for `graph_l_d24/src/` | Same check as Graph_M |
+| 3 | Configuration | Capacity constants, E_PAR, E2_PAR, NS_PAR, shard size, fixed-point formats, and clock targets; Graph_L uses 50,000 edges/shard and 33 shards | Check consistency with Tables 2 and 9 |
+| 4 | Weights | 528 parameters, shared by both designs or supplied in their respective quantized forms, with a format description | Confirm redistribution rights; disclose any withheld weights |
+| 5 | At least one legal input and expected output per design | One destination-sorted, padded Graph_M graph and one Graph_L graph, with expected outputs | Confirm redistribution rights for TrackML-derived inputs |
+| 6 | Testbenches and build instructions | Executable C-sim/co-sim testbenches and Vitis HLS Tcl with `csynth`/`cosim` commands and arguments | Exercise the README procedure in a clean environment |
+| 7 | Version and tool information | Fixed commit/tag where available, Vitis HLS/Vivado versions, exact XCVU9P part, and clock periods | Link the source to the successful 8.8 ns run using a build manifest, export record, hashes, or dated run information |
+| 8 | README | Directory structure, build/testbench instructions, expected outputs, and limitations | See Section 3 |
+| 9 | LICENSE | Approved terms such as MIT or Apache-2.0 | Confirm the authors/institution may choose the license; uploading to GitHub alone is not a project reuse license |
 
-## 2. 與論文片段的對應（第 32 條）
+This file is the translated requirements checklist, not a declaration that every
+administrative or publication requirement is complete. Current implementation
+and licensing status are recorded in `PACKAGING_STATUS.md`, `README.md`,
+`NOTICE.md`, and `validation/csim_summary.json`. Only C simulation was run for
+package verification; synthesis and P&R were not run.
 
-論文要引用的兩段程式碼必須在公開版中**逐字存在**，且行號以公開版為準：
+## 2. Correspondence with Paper Listings (Item 32)
 
-| 片段 | 位置（audit 行號，需用公開版重新確認） |
+The two listings selected for the paper must exist **verbatim** in the released
+source. Line numbers must be checked against the released files.
+
+| Excerpt | Original audit references; recheck in the released source |
 | --- | --- |
-| Graph_L Aggregator carry：`aggregation_global_par_8_cl_init`、尾端 carry 更新、首片與其後呼叫 | `su_top_model.cpp` L:1114、L:1470、L:6951、L:7021 |
-| node table 的 URAM 複製與 lane 到副本的讀取映射（論文式：`i mod (E_PAR/2)`） | Graph_L L:6810 附近；Graph_M M:3899 附近 |
+| Graph_L aggregator carry: `aggregation_global_par_8_cl_init`, carry commit, first-shard and subsequent-shard calls | `su_top_model.cpp` L:1114, L:1470, L:6951, L:7021 |
+| Node-table URAM replicas and lane-to-replica mapping, `i mod (E_PAR/2)` | Graph_L near L:6810; Graph_M near M:3899 |
 
-詳細問題見 `docs/SOURCE_CODE_REQUEST.md`。
+See `SOURCE_CODE_REQUEST.md` for the detailed request and
+`SOURCE_CODE_RESPONSE.md` for checked locations. The complete L aggregator starts
+at line 1100; line 1114 is the first static carry declaration.
 
-## 3. README 必須寫清楚的限制
+## 3. Limitations the README Must State
 
-- 公開的是最終 Graph_M／Graph_L；Fig. 7–10 的設計空間配置、舊版設計、CPU／GPU
-  benchmark、Fmax sweep 不在此 repo。
-- FPGA 延遲是 RTL co-sim 的 cycle 數換算，不是上板量測；power 是 Vivado 的 vectorless
-  估計（Medium confidence），不是板級量測。
-- 若權重或測試圖不公開，註明哪些部分無法重跑，不要稱為「可完整執行」。
-- 資源、時序、功率結果需要 Vivado 與授權，README 說明所用版本與約束，但不保證他人能
-  得到完全相同的 P&R 結果（run-to-run 變異未評估）。
+- Only the final Graph_M/Graph_L designs are included. Historical design-space
+  configurations from Figures 7-10, old versions, CPU/GPU benchmarks, and Fmax
+  sweeps are outside this repository.
+- FPGA latency is derived from RTL co-simulation cycles and the timing-closed
+  operating clock; it is not measured board latency. Power is a Vivado vectorless
+  estimate with Medium confidence, not measured board power.
+- If weights or test graphs are withheld, identify which procedures cannot be
+  rerun. Do not describe an incomplete package as fully executable.
+- Resource, timing, and power reproduction needs Vivado and appropriate licenses.
+  State tool versions and constraints without promising identical P&R results;
+  run-to-run variability has not been evaluated.
 
-## 4. 公開前的清理
+## 4. Cleanup Before Public Release
 
-- 移除 `<local-workspace>/` 等絕對路徑、內部帳號、機器名稱。
-- 移除暫存檔、DCP、大型 log、未使用的舊版檔案；保留的舊檔要標明不對應論文。
-- 舊的 Graph_L 1.086 ms 設計不得當成結果放入。
-- 不放：前人論文 PDF（Huang、Elabd）、回覆信草稿、`experiment_data/` 內部報告。
-- 檢查程式碼註解沒有未公開的內部資訊。
+- Remove private absolute paths, account names, and machine names.
+- Exclude temporary files, DCPs, large logs, and unused historical sources. Mark any
+  retained historical file that does not correspond to the reported final design.
+- Do not include the historical Graph_L 1.086 ms result as a final-design result.
+- Exclude earlier papers' PDFs, private rebuttal drafts, and internal
+  `experiment_data/` reports.
+- Check source comments for unpublished internal information.
 
-## 5. Code availability 聲明草稿方向（待 repo 公開後再填網址）
+## 5. Code-Availability Statement
 
-聲明要準確寫出：公開了什麼（最終 Graph_M／Graph_L 的 HLS 原碼、設定、測試輸入／權重、
-testbench 與建置說明）、沒公開什麼（設計空間研究的其他配置、CPU／GPU benchmark 腳本、
-實驗原始資料，或依授權限制的輸入圖）、固定版本（commit／tag，或 Zenodo DOI）與授權。
-在 repo 真的公開前，只能寫 "will be released at …"，不能先填網址。
+After an actual repository is published, describe precisely what it contains:
+final Graph_M/Graph_L HLS sources, configurations, supplied inputs/weights,
+testbenches, and build instructions. Also identify omissions, including other
+design-space configurations, CPU/GPU scripts, original experimental records,
+and any inputs withheld for licensing reasons. Cite a real fixed version
+(commit/tag or Zenodo DOI) and the approved license.
 
-## 6. 之後的流程
+Before publication, describe the planned release without inventing a URL or
+claiming that the repository is already available.
 
-1. 你整理上述檔案，並回答 `docs/SOURCE_CODE_REQUEST.md` 的問題。
-2. 我先列出候選片段與行號讓你確認，不修改論文。
-3. 你同意後，我才新增 Code availability 一節、加入程式碼片段，更新追蹤表第 12、32 條與
-   `revision/revision_record.md`，並重新建置。
-4. `[O]` 狀態需你明確指示才標記。
+## 6. Subsequent Manuscript Workflow
+
+1. Assemble these artifacts and answer `SOURCE_CODE_REQUEST.md`.
+2. Present candidate listings and exact line numbers for author review without
+   editing the manuscript.
+3. After author approval, add the code-availability section and source listings,
+   update Items 12/32 and `revision/revision_record.md`, and rebuild the paper.
+4. Marking an item `[O]` requires an explicit author instruction.

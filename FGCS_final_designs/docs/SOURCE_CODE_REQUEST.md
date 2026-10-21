@@ -1,86 +1,113 @@
-# 需要整理給 Claude 的 HLS 原始碼（Item 12／32 的程式碼片段）
+# Requested HLS Source for Paper Listings (Items 12 and 32)
 
-目的：在論文 §4 加入 1–2 段短的 HLS 原碼片段，並在 Code availability 公開 repo。
-片段必須**逐字取自最終版原始碼**；我不憑記憶或 audit 摘錄改寫。
+Purpose: add one or two short HLS source listings to paper Section 4 and prepare
+a public code-availability repository. Listings must be copied **verbatim from
+the final source**, not reconstructed from memory or rewritten audit excerpts.
 
-最終版 = 論文數值對應的版本：Graph_M（D20 `<20,12>`、E_PAR=8、125 MHz）與
-Graph_L（D24 `<24,16>`、E_PAR=8、8.8 ns / 113.636 MHz，33 個 edge shard）。
+Final designs: Graph_M D20 `<20,12>`, E_PAR=8, 125 MHz; Graph_L D24 `<24,16>`,
+E_PAR=8, 8.8 ns / 113.636 MHz, with 33 edge shards.
 
-## 1. 先請提供的資訊
+This file translates the source request. The corresponding answers, verified
+line numbers, and excerpts are in `SOURCE_CODE_RESPONSE.md`.
 
-| 項目 | 說明 |
+## 1. Required Source and Version Information
+
+| Item | Requested information |
 | --- | --- |
-| 原始碼根目錄在本機的路徑 | `graph_l_d24/src/` 與 Graph_M 對應目錄；目前工作目錄找不到 |
-| 版本 | git commit hash 或 tag（若尚無版本控制，請說明檔案日期），需與 8.8 ns / D24 / D20 最終結果一致；如何證明一致見下一列 |
-| 前處理／testbench | 建圖與排序（sorted by destination）、shard 切分與 padding 的程式或腳本，路徑與版本同上 |
-| 檔案 | `su_top_model.cpp`、`su_defines.h`、`su_util.cpp`（`su_host_load.h` 不需要） |
-| 版本識別 | `su_top_model.cpp` 本身不能證明「這是 8.8 ns 成功佈線的版本」。除 commit／tag 外，請提供能連到該次結果的紀錄：build manifest、HLS export 或 Vivado Tcl、或報告（如 `graph_l_d24_8p8ns_resource_latency_power_report.md`）中的版本識別（檔案雜湊、日期、run 名稱） |
-| 行號基準 | `MODEL_DATAPATH_SOURCE_CHECK.md` 的 `L:`／`M:` 行號是 audit 讀到的行號；請確認它們對應上述版本，否則以函式名稱為準 |
+| Source roots | Locate `graph_l_d24/src/` and the corresponding Graph_M directory; in this package they are under `designs/Graph_L/src/` and `designs/Graph_M/src/` |
+| Version | Git commit/tag, or file dates if no version control exists; identify the source corresponding to final D20/D24 results |
+| Preprocessing/testbench | Paths and version identification for graph construction, destination ordering, shard splitting, and padding |
+| Files | `su_top_model.cpp`, `su_defines.h`, and `su_util.cpp`; the legacy `su_host_load.h` is not requested |
+| Implementation lineage | C++ alone does not prove that the source belongs to a timing-closed 8.8 ns implementation. Provide a build manifest, HLS export/Vivado Tcl, or dated/hash-identified run/report that connects source and results |
+| Line-number basis | Verify whether `L:`/`M:` references in `MODEL_DATAPATH_SOURCE_CHECK.md` match this source version; otherwise identify functions by name and report current lines |
 
-## 2. 片段 1（首選）：Graph_L 跨 shard 的 Aggregator carry
+## 2. Preferred Listing 1: Graph_L Cross-Shard Aggregator Carry
 
-用途：說明大圖分片後，未完成的目的節點累加如何跨 shard 保留與接續，邊界上不遺失訊息。
+Purpose: show how the unfinished destination-node sum is retained and continued
+across shards without losing messages at a boundary.
 
-請提供下列**完整函式與呼叫處**（不要只截 static 變數）：
+Provide the **complete function and its call sites**, not only static declarations.
 
-| 內容 | 位置（audit 行號，需重新確認） |
+| Requested content | Original audit reference, requiring verification |
 | --- | --- |
-| 函式 `aggregation_global_par_8_cl_init` 全文 | `su_top_model.cpp` L:1114 起 |
-| 函式尾端更新 carry（`keep_e_pre`、`keep_idx_pre`、`keep_n_pre`）的部分 | L:1470 附近 |
-| 第一片呼叫（`init = true`） | L:6951 |
-| 其後各片呼叫（`init = false`） | L:7021 |
-| `sens_agg_edge`、`index_t`、`node`、`MAX_NODE`、`EDGE_DIM` 的型別／常數定義 | `su_defines.h` |
+| Complete `aggregation_global_par_8_cl_init` | `su_top_model.cpp`, near L:1114; the checked function actually starts at L:1100 |
+| Tail updating `keep_e_pre`, `keep_idx_pre`, and `keep_n_pre` | Near L:1470 |
+| First-shard call, `init=true` | L:6951 |
+| Subsequent-shard call, `init=false` | L:7021 |
+| Definitions of `sens_agg_edge`, `index_t`, `node`, `MAX_NODE`, and `EDGE_DIM` | `su_defines.h` |
 
-需要同時回答：
-1. `keep_n_pre` 沒有顯式初始化（audit 已指出）；它第一片時的有效性依賴什麼（初始 dummy token？）
-2. 這個 carry 是否只在 Graph_L 使用，Graph_M 的 aggregator 是不是另一個函式？
-3. carry 的正確性是否依賴目的節點 ID 依序到達（sorted by destination）？HLS aggregator 只能顯示它依賴這個前提，不能證明輸入一定排序。請另外提供輸入端的證據：建圖／前處理程式或 testbench 如何保證排序，以及 shard 邊界與 padding 的處理（例如 shard 切在同一目的節點中間時 carry 如何接續、padding 邊的目的 ID 是什麼）。
+Also answer:
 
-## 3. 片段 2（篇幅允許時）：node table 的 URAM 複製與讀取映射
+1. `keep_n_pre` has no explicit reset in the audited init block. What makes its
+   first-shard use safe for valid data? Does this depend on an initial dummy token?
+2. Is this static cross-shard carry specific to the Graph_L active path? Does
+   Graph_M call a different aggregator?
+3. Does correctness require destination IDs to arrive in sorted order? The
+   aggregator can demonstrate that prerequisite but cannot prove input sorting.
+   Provide input-side evidence from preprocessing or the testbench, including
+   shard cuts inside one destination group, continuation of partial sums, the
+   padding destination ID, and terminal-group handling.
 
-用途：說明 E_PAR/2 份複製下，edge lane 如何對應到副本，與 §4.4 的描述一致。
-重點是**讀取映射**，不是 `BIND_STORAGE`／`ARRAY_PARTITION` 指令本身（那是標準 HLS 用法，不稱為新穎性）。
+## 3. Optional Listing 2: URAM Node Replicas and Read Mapping
 
-請提供：
+Purpose: explain how edge lanes select among E_PAR/2 node-table replicas,
+consistent with paper Section 4.4. Emphasize the **actual read index**, not storage
+or partition pragmas alone; those are standard HLS facilities.
 
-| 內容 | 位置（audit 行號，需重新確認） |
+| Requested content | Original audit reference, requiring verification |
 | --- | --- |
-| `node_src_mp_L1`、`node_des_mp_L1` 的宣告與 `BIND_STORAGE`／`ARRAY_PARTITION` pragma | Graph_L：L:6810 附近；Graph_M：M:3899 附近 |
-| EdgeBlock1 中 lane `i` 讀取副本的程式碼與實際索引式（論文為 `i mod (E_PAR/2)`） | `edge_block_*` 相關函式，請指出函式名稱 |
-| 陣列維度與副本數的關係（`[4][43278]` 中 4 = E_PAR/2） | 同上 |
+| `node_src_mp_L1` / `node_des_mp_L1` declarations and `BIND_STORAGE` / `ARRAY_PARTITION` pragmas | Graph_L near L:6810; Graph_M near M:3899 |
+| EdgeBlock1 lane-to-replica read and its actual index expression | Identify the relevant `edge_block_*` function |
+| Relation between array dimensions and replica count | For example, 4 in `[4][43278]` equals E_PAR/2 |
 
-需要同時回答：
-1. 論文 §4.4 寫的是 lane $i$ 讀 copy $i \bmod (E_{\mathrm{PAR}}/2)$（`4-architecture.tex:105`）。$E_{\mathrm{PAR}}=8$ 時 lane 0／4 共用 copy 0、lane 1／5 共用 copy 1，依此類推（不是 `i/2`，那會讓 lane 0／1 共用 copy 0，兩者不同）。請從原始碼確認實際索引式；若原碼不同，**先修正論文**，再選片段。
-2. 每個副本是 dual-port，兩個 lane 共用一份，這點在程式碼中如何體現？
+Also answer:
 
-## 4. 不需要的部分
+1. Section 4.4 states that lane i reads replica `i mod (E_PAR/2)`
+   (`4-architecture.tex:105` in the manuscript request). For E_PAR=8, lanes 0/4
+   share copy0, 1/5 share copy1, and so on. This differs from `i/2`, which groups
+   lanes 0/1 together. Confirm the actual source expression. If the source differs,
+   resolve the manuscript discrepancy before choosing the listing.
+2. How does the code establish dual-port replicas shared by two lanes?
 
-- 頂層 `DATAFLOW` 串接：架構圖與 Listing 1 已涵蓋。
-- 單獨的 `PIPELINE II=1`：標準用法，不展示設計貢獻。
-- `BIND_OP`（opt_rsrc 把乘法移到 LUT）：正文一句話帶過即可。
-- 先前移除的 §7.2 稀疏表合併 `merge_step` 摘錄：除非你認為它比片段 2 更重要，否則不放。
+## 4. Excerpts Not Requested
 
-## 5. 整理格式建議
+- Top-level `DATAFLOW` wiring: the architecture diagram and existing listing
+  already describe it.
+- A standalone `PIPELINE II=1`: standard HLS usage does not illustrate the design
+  contribution by itself.
+- `BIND_OP` for the opt_rsrc LUT/DSP exchange: a brief textual explanation suffices.
+- The previously removed Section 7.2 `merge_step` excerpt, unless there is a clear
+  reason it is more informative than the replica-read listing.
 
-每個片段請附：
-1. 檔名、函式名、起訖行號（以實際檔案為準）。
-2. 逐字貼上的原始碼（保留原註解與縮排）。
-3. 你認為可以用 `...` 省略的部分（標明哪幾行）。
-4. 上面「需要同時回答」的問題答案。
+## 5. Requested Excerpt Format
 
-## 6. 公開 repo（Code availability，Item 12）需要確認的事
+For each candidate, provide:
 
-| 問題 | 為什麼需要 |
+1. Filename, function name, and exact start/end lines in the actual file.
+2. Verbatim source, preserving comments, indentation, and whitespace.
+3. Suggested omission ranges, with exact line numbers; do not present edited
+   excerpts as complete unmodified functions.
+4. Answers to the related questions above.
+
+## 6. Code-Availability Information Requiring Confirmation
+
+| Question | Purpose |
 | --- | --- |
-| GitHub 網址與授權條款（MIT／Apache-2.0 等） | Code availability 一節要寫 |
-| 是否用 Zenodo 取得固定版本 DOI | 論文引用固定版本 |
-| 公開哪些：HLS 原始碼、Graph_M／Graph_L 設定、co-sim testbench、pseudo-graph 產生腳本、`fgcs_in_benchmark`、Fmax／P&R Tcl 腳本 | 決定聲明文字 |
-| 輸入圖（TrackML 衍生）能否公開 | 不能時改寫為「提供產生圖的腳本」 |
-| 預計公開日期 | 公開前只能寫 "will be released at ..."，網址不能先填 |
+| Public GitHub URL and approved license, such as MIT or Apache-2.0 | Populate the code-availability section accurately |
+| A Zenodo DOI for a fixed release | Cite an actual immutable version |
+| Release scope: HLS, M/L configurations, co-sim TBs, pseudo-graph scripts, `fgcs_in_benchmark`, Fmax/P&R Tcl | State exactly what is public and what is omitted |
+| Permission to redistribute TrackML-derived graph inputs | If inputs cannot be released, describe the available generation scripts and execution limitations honestly |
+| Planned public-release date | Describe an unpublished release as planned; do not invent a repository URL |
 
-## 7. 之後的流程
+Unknown items must remain explicitly unknown or pending. Do not choose a project
+license, fabricate an approved redistribution scope, or claim publication on
+behalf of the authors.
 
-1. 你提供上述內容。
-2. 我先列出候選片段與行號，讓你確認（不修改論文）。
-3. 你同意後，我才寫進 `revision/4-architecture.tex`，新增 Code availability 一節，更新追蹤表第 12、32 條備註與 `revision/revision_record.md`，並重新建置。
-4. 狀態 `[O]` 仍需你明確指示才會標記。
+## 7. Subsequent Workflow
+
+1. Supply the requested source and evidence.
+2. Present candidate excerpts and verified lines for review without editing the paper.
+3. After author approval, update `revision/4-architecture.tex`, add the
+   code-availability section, update Items 12/32 and `revision/revision_record.md`,
+   and rebuild the manuscript.
+4. Marking a status `[O]` requires an explicit author instruction.
